@@ -23,6 +23,12 @@ void loop() {
 
 ```
 
+## Supported devices
+This library currently supports only ESP8266 devices, with support coming soon for esp32.
+This library has only yet been tested on the following devices:
+* Adafruit Feather Huzzah ESP8266
+
+
 ## Installation/Usage:
 1. Configure Arduino IDE for the board you are using
     - Go to File > Preferences
