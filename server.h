@@ -73,6 +73,10 @@ class CubeServer {
     CubeServer(const char * team_name, const char * team_secret, const char * server_fingerprint, CubeServerConfig conf) : CubeServer(team_name, team_secret, server_fingerprint, UNIX_TIMESTAMP, CUBESERVER_DEFAULT_CONFIG) {};
     CubeServer(const char * team_name, const char * team_secret, const char * server_fingerprint) : CubeServer(team_name, team_secret, server_fingerprint, CUBESERVER_DEFAULT_CONFIG) {};
 
+#ifdef CLIENT_CONF_H
+    CubeServer() : CubeServer(TEAM_NAME, TEAM_SECRET, SERVER_FINGERPRINT) {};
+#endif
+
     // connect to the wifi access point:
     int connect(bool (*connection_wait_loop)());
     int connect();
