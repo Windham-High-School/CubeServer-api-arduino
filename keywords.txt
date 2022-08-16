@@ -1,0 +1,17 @@
+CubeServer  KEYWORD1
+CubeServerConfig    KEYWORD1
+GameStatus  KEYWORD1
+connect KEYWORD2
+get_status  KEYWORD2
+post    KEYWORD2
+postTemperature KEYWORD2
+postHumidity    KEYWORD2
+postPressure    KEYWORD2
+postLightIntensity  KEYWORD2
+postComment KEYWORD2
+CUBESERVER_DEFAULT_CONFIG   LITERAL1 
+VERIFICATION_OK LITERAL1
+VERIFICATION_FAILED LITERAL1
+client  LITERAL1
+http    LITERAL1
+server_fingerprint  LITERAL1
