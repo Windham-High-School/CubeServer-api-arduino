@@ -7,8 +7,28 @@ _This currently only supports ESP8266 (It's in development!)_
 
 ----------------------------------------------------------------
 
-Example Sketch to demonstrate features
+## Example Sketches
 (client_config.h is downloaded from the CubeServer webapp):
+
+Bare minimum:
+``` C++
+#include <Arduino.h>
+#include <server.h>
+#include "client_config.h"
+
+CubeServer server(TEAM_NAME, TEAM_SECRET, SERVER_FINGERPRINT);
+
+void setup() {
+  server.connect();
+  server.postTemperature(32);
+}
+
+void loop() {
+}
+
+```
+
+Advanced features demonstrated:
 ``` C++
 #include <Arduino.h>
 #include <server.h>
