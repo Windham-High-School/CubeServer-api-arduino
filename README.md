@@ -34,9 +34,14 @@ void loop() {
     - Go to Tools > Board > Boards Manager
     - Search for "esp8266" or "esp32" depending on the microcontroller you are using
     - Install the package for the microcontroller you are using
-2. If you have registered your team with the CubeServer webapp, download the zip file that it provides. Otherwise, download the latest zip file of the library from the [releases page](https://github.com/snorklerjoe/CubeServer-api-arduino/releases).
-3. In the Arduino IDE, go to Sketch > Include Library > Add .ZIP Library and select the file you downloaded.
-4. If you downloaded the library from the webapp, that's it! Try out the basic example above to get started. Otherwise, you will need to download the client_config.h file from the server, add that file to your sketch, and use the following code to initialize the connection with the server:
+    - Under Tools > Board, select the microcontroller board you are using
+2. Install ArduinoJson
+    - Go to Sketch > Include Library > Manage Libraries
+    - Search "ArduinoJson"
+    - Click "Install" underneath the item titled "ArduinoJson"
+3. If you have registered your team with the CubeServer webapp, download the zip file that it provides. Otherwise, download the latest zip file of the library from the [releases page](https://github.com/snorklerjoe/CubeServer-api-arduino/releases).
+4. In the Arduino IDE, go to Sketch > Include Library > Add .ZIP Library and select the file you downloaded.
+5. If you downloaded the library from the webapp, that's it! Try out the basic example above to get started. Otherwise, you will need to download the client_config.h file from the server, add that file to your sketch, and use the following code to initialize the connection with the server:
     ``` C++
     #include <Arduino.h>
     #include <server.h>
