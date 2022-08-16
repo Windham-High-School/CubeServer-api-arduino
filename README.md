@@ -10,7 +10,7 @@ Minimum code to post a temperature value of 32 degrees F every 10 minutes:
 #include <Arduino.h>
 #include <server.h>
 
-CubeServer server();
+CubeServer server;
 
 void setup() {
   server.connect();
@@ -54,7 +54,7 @@ void loop() {
       ``` C++
       #include <Arduino.h>
       #include <server.h>
-      CubeServer server();
+      CubeServer server;
       ```
 
 ----------------------------------------------------------------
