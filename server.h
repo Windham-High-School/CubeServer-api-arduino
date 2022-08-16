@@ -26,6 +26,7 @@
 # error "Unsupported Architecture."
 #endif
 
+#include "server_options.h"
 
 #include "compile_time.h"
 
