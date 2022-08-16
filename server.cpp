@@ -15,7 +15,6 @@ int CubeServer::_begin_client(String path) {
   int connStatus = client.connect(this->_conf.API_HOST, this->_conf.API_PORT);
   if(connStatus >= 0) {
     //if(client.verify(server_fingerprint, this->_conf.API_HOST)) {
-      Serial.println(this->_conf.API_HOST + ':' + this->_conf.API_PORT + path);
       http.begin(client, this->_conf.API_HOST + ':' + this->_conf.API_PORT + path);
       http.setAuthorization(this->_team_name, this->_team_secret);
       return VERIFICATION_OK;
@@ -56,29 +55,91 @@ int CubeServer::get_status(GameStatus* stats_var) {
   if(verification_status == VERIFICATION_OK) {
     int httpCode = http.GET();
     if (httpCode == HTTP_CODE_OK) {
-      Serial.println("getString...");
-      String payload = http.getString();
-      Serial.println(payload);
-      Serial.println("Making json doc...");
-      StaticJsonDocument<128> doc;
-      Serial.println("Deserializing...");
-      DeserializationError error = deserializeJson(doc, payload);
-      Serial.println("Splitting...");
-      Serial.println("Time...");
-      stats_var->unix_time = doc["unix_time"].as<int>();
-      Serial.println(doc["unix_time"].as<int>());
-      Serial.println("Score as int...");
-      stats_var->score = doc["status"]["score"].as<int>();
-      Serial.println("Strikes as int...");
-      stats_var->strikes = doc["status"]["strikes"].as<int>();
+      StaticJsonDocument<512> doc;
+      DeserializationError error = deserializeJson(doc, http.getStream());
+      if(error) {
+        return -1;
+      }
+      stats_var->unix_time = doc["unix_time"];
+      stats_var->score = doc["status"]["score"];
+      stats_var->strikes = doc["status"]["strikes"];
     }
-      Serial.println("Closing...");
     http.end();
     return httpCode;
   }
+  http.end();
   return verification_status;
 }
 
-//    // get status:
-//    GameStatus status();
 
+int CubeServer::post(char *json) {
+  int verification_status = this->_begin_client("/data");
+  if(verification_status == VERIFICATION_OK) {
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded", false, true);
+    int httpCode = http.POST(String("data=") + json + '&');
+    return httpCode;
+    http.end();
+  }
+  http.end();
+  return verification_status;
+}
+
+int CubeServer::postTemperature(int value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"temperature\", \"value\": %i}", value);
+  return this->post(data);
+}
+int CubeServer::postTemperature(double value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"temperature\", \"value\": %f}", value);
+  return this->post(data);
+}
+
+int CubeServer::postHumidity(int value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"humidity\", \"value\": %i}", value);
+  return this->post(data);
+}
+int CubeServer::postHumidity(double value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"humidity\", \"value\": %f}", value);
+  return this->post(data);
+}
+
+int CubeServer::postPressure(int value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"pressure\", \"value\": %i}", value);
+  return this->post(data);
+}
+int CubeServer::postPressure(double value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"pressure\", \"value\": %f}", value);
+  return this->post(data);
+}
+
+int CubeServer::postLightIntensity(int value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"light intensity\", \"value\": %i}", value);
+  return this->post(data);
+}
+int CubeServer::postLightIntensity(double value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"light intensity\", \"value\": %f}", value);
+  return this->post(data);
+}
+
+int CubeServer::postComment(String value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"comment\", \"value\": \"%s\"}", value);
+  return this->post(data);
+}
+int CubeServer::postComment(char *value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"comment\", \"value\": \"%s\"}", value);
+  return this->post(data);
+}
+int CubeServer::postComment(const char *value) {
+  char data[64];
+  sprintf(data, "{\"type\": \"comment\", \"value\": \"%s\"}", value);
+  return this->post(data);
+}

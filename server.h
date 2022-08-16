@@ -79,6 +79,25 @@ class CubeServer {
     // get status:
     int get_status(GameStatus* stats_var);
 
+    // post some data:
+    int post(char *json);
+
+    int postTemperature(int value);
+    int postTemperature(double value);
+
+    int postHumidity(int value);
+    int postHumidity(double value);
+
+    int postPressure(int value);
+    int postPressure(double value);
+
+    int postLightIntensity(int value);
+    int postLightIntensity(double value);
+
+    int postComment(String value);
+    int postComment(char *value);
+    int postComment(const char *value);
+
 };
 
 
