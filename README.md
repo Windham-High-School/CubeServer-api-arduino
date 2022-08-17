@@ -34,7 +34,7 @@ This library has only yet been tested on the following devices:
     - Go to File > Preferences
     - By "Additional boards manager URLs," paste in the following:
     ```
-    https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
+    https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
     ```
     - Click "ok"
     - Go to Tools > Board > Boards Manager
