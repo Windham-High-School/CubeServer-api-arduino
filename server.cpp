@@ -12,13 +12,26 @@ WiFiClientSecure client;
 HTTPClient http;
 
 int CubeServer::_begin_client(String path) {
+#ifdef ARDUINO_ARCH_ESP32  // ESP32 version only (8266 automatically verifies)--
+  client.setInsecure(); // Not an issue since we'll manually verify the certificate:
+#else   // ESP8266 version only  (BearSSL)--
+  //client.allowSelfSignedCerts();
+  client.setX509Time(this->_timestamp);
+  client.setFingerprint(this->_server_fingerprint);
+#endif
   int connStatus = client.connect(this->_conf.API_HOST, this->_conf.API_PORT);
-  if(connStatus >= 0) {
-    //if(client.verify(server_fingerprint, this->_conf.API_HOST)) {
-      http.begin(client, this->_conf.API_HOST + ':' + this->_conf.API_PORT + path);
+#ifdef ARDUINO_ARCH_ESP8266
+  ++connStatus;
+#endif
+  if(connStatus > 0) {
+#ifdef ARDUINO_ARCH_ESP32  // ESP32 version only (8266 automatically verifies)--
+    if(!client.verify(this->_server_fingerprint, this->_conf.API_CN))
+      return VERIFICATION_FAILED;
+#endif
+      // TODO: Make this more efficient by avoiding Strings:
+      http.begin(client, String(this->_conf.API_HOST) + ':' + this->_conf.API_PORT + path);
       http.setAuthorization(this->_team_name, this->_team_secret);
       return VERIFICATION_OK;
-    //} return VERIFICATION_FAILED;
   }
   return connStatus;
 }
@@ -28,8 +41,8 @@ CubeServer::CubeServer(const char * team_name, const char * team_secret, const c
   this->_team_name = team_name;
   this->_team_secret = team_secret;
   this->_conf = conf;
-  client.setX509Time(timestamp);  // Use the build timestamp since we don't have NTP access
-  client.setFingerprint(server_fingerprint);
+  this->_server_fingerprint = server_fingerprint;
+  this->_timestamp = timestamp;
 }
 
 int CubeServer::connect(bool (*connection_wait_loop)()) {
@@ -38,6 +51,7 @@ int CubeServer::connect(bool (*connection_wait_loop)()) {
   while(WiFi.status() != WL_CONNECTED) {
     if(!connection_wait_loop()) return false;
   }
+
   return client.connect(this->_conf.API_HOST, this->_conf.API_PORT);
 }
 
@@ -58,6 +72,7 @@ int CubeServer::get_status(GameStatus* stats_var) {
       StaticJsonDocument<512> doc;
       DeserializationError error = deserializeJson(doc, http.getStream());
       if(error) {
+        http.end();
         return -1;
       }
       stats_var->unix_time = doc["unix_time"];
@@ -77,8 +92,8 @@ int CubeServer::post(char *json) {
   if(verification_status == VERIFICATION_OK) {
     http.addHeader("Content-Type", "application/x-www-form-urlencoded", false, true);
     int httpCode = http.POST(String("data=") + json + '&');
-    return httpCode;
     http.end();
+    return httpCode;
   }
   http.end();
   return verification_status;
