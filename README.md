@@ -3,8 +3,6 @@
 
 An arduino-C implementation of the API wrapper for CubeServer
 
-_This currently only supports ESP8266 (It's in development!)_
-
 Minimum code to post a temperature value of 32 degrees F every 10 minutes:
 ``` C++
 #include <Arduino.h>
@@ -24,9 +22,11 @@ void loop() {
 ```
 
 ## Supported devices
-This library currently supports only ESP8266 devices, with support coming soon for esp32.
-This library has only yet been tested on the following devices:
+This library is intended to support ESP8266 and ESP32 microcontrollers.
+
+This library has only yet been tested on the following boards:
 * Adafruit Feather Huzzah ESP8266
+* Unexpected Maker Feather S2 (ESP32)
 
 
 ## Installation/Usage:
@@ -53,7 +53,7 @@ This library has only yet been tested on the following devices:
     #include <server.h>
     #include "client_config.h"
 
-    CubeServer server(TEAM_NAME, TEAM_SECRET, SERVER_FINGERPRINT);
+    CubeServer server(TEAM_NAME, TEAM_SECRET, SERVER_FINGERPRINT);  // Use SERVER_FINGERPRINT_SHA256 on ESP32
     ```
       instead of:
 
@@ -74,7 +74,7 @@ Advanced features demonstrated:
 #include <server.h>
 #include "client_config.h"
 
-CubeServer server(TEAM_NAME, TEAM_SECRET, SERVER_FINGERPRINT);
+CubeServer server(TEAM_NAME, TEAM_SECRET, SERVER_FINGERPRINT);  // Use SERVER_FINGERPRINT_SHA256 on ESP32
 
 int code;
 GameStatus stats;
