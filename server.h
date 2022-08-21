@@ -44,13 +44,21 @@ typedef struct CubeServerConfig {
   int API_PORT;
 } CubeServerConfig;
 
-
+#ifdef CLIENT_CONF_H
+const CubeServerConfig CUBESERVER_DEFAULT_CONFIG = {
+  CONF_AP_SSID,
+  CONF_API_CN,
+  CONF_API_HOST,
+  API_PORT
+};
+#else
 const CubeServerConfig CUBESERVER_DEFAULT_CONFIG = {
   "CubeServer-API",
   "api.local",
   "https://api.local",
   8081
 };
+#endif
 
 
 typedef struct GameStatus {
