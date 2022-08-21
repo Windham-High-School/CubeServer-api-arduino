@@ -10,7 +10,7 @@ Minimum code to post a temperature value of 32 degrees F every 10 minutes:
 #include <Arduino.h>
 #include <server.h>
 
-CubeServer server();
+CubeServer server;
 
 void setup() {
   server.connect();
@@ -23,12 +23,18 @@ void loop() {
 
 ```
 
+## Supported devices
+This library currently supports only ESP8266 devices, with support coming soon for esp32.
+This library has only yet been tested on the following devices:
+* Adafruit Feather Huzzah ESP8266
+
+
 ## Installation/Usage:
 1. Configure Arduino IDE for the board you are using
     - Go to File > Preferences
     - By "Additional boards manager URLs," paste in the following:
     ```
-    https://dl.espressif.com/dl/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
+    https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json, http://arduino.esp8266.com/stable/package_esp8266com_index.json
     ```
     - Click "ok"
     - Go to Tools > Board > Boards Manager
@@ -54,7 +60,7 @@ void loop() {
       ``` C++
       #include <Arduino.h>
       #include <server.h>
-      CubeServer server();
+      CubeServer server;
       ```
 
 ----------------------------------------------------------------
