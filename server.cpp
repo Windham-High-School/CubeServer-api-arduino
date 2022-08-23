@@ -90,8 +90,8 @@ int CubeServer::get_status(GameStatus* stats_var) {
 int CubeServer::post(char *json) {
   int verification_status = this->_begin_client("/data");
   if(verification_status == VERIFICATION_OK) {
-    http.addHeader("Content-Type", "application/x-www-form-urlencoded", false, true);
-    int httpCode = http.POST(String("data=") + json + '&');
+    http.addHeader("Content-Type", "application/json", false, true);
+    int httpCode = http.POST(json);
     http.end();
     return httpCode;
   }
