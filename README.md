@@ -106,7 +106,7 @@ void setup() {
   //code = server.postTemperature(32);
   //code = server.postLightIntensity(12.5);
   //code = server.postPressure(25.2);
-  //code = server.postComment("Hello World!");
+  //code = server.postComment("Hello World!");  // Comments may only be 32 chars long!
   if(code == 201)
     Serial.println("Data posted successfully!");
   else

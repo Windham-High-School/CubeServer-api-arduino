@@ -143,7 +143,7 @@ int CubeServer::postLightIntensity(double value) {
   return this->post(data);
 }
 
-int CubeServer::postComment(String value) {
+int CubeServer::postComment(String value) {  // 32 chars max!
   char data[64];
   sprintf(data, "{\"type\": \"comment\", \"value\": \"%s\"}", value);
   return this->post(data);
