@@ -9,5 +9,7 @@ else
     cp server_options_default.h server_options.h
 fi
 
-zip -r ${name}.zip . 2>&1 > /dev/null
+mkdir ${name}
+cp README.md server.h server.cpp server_options.h server_options_client_conf.h server_options_default.h LICENSE library.properties keywords.txt compile_time.h ./${name}/
+zip -r ${name}.zip ./${name} 2>&1 > /dev/null
 echo ${name}.zip
