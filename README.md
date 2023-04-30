@@ -1,6 +1,23 @@
 # CubeServer-api-arduino
 [![Maintainability](https://api.codeclimate.com/v1/badges/3637b71abcbcb0d8c30b/maintainability)](https://codeclimate.com/github/snorklerjoe/CubeServer-api-arduino/maintainability)
 
+
+## :warning: This library is not currently supported :warning:
+
+Only the [Python/CircuitPython API Wrapper](https://github.com/Windham-High-School/CubeServer-api-python) is currently supported for CubeServer.
+
+Perhaps this will be revived in the future, but the demand is too low (very few students are comfortable with C or C++), and I (JRF) seem to be the only one who would maintain it, but I'm graduating and lack the bandwidth.
+
+This library has not been tested since the *early* prerelease versions of CubeServer- there is a lot that is incompatible or unimplemented, as a warning to anyone who thinks they would like to casually fix this guy up. I encourage you to do so (feel free to contact me if you have any questions), but I will note that this is no task for the fainthearted.
+
+:goberserk:
+
+
+
+
+
+-------------------------------------------------------------------
+
 An arduino-C implementation of the API wrapper for CubeServer
 
 Minimum code to post a temperature value of 32 degrees F every 10 minutes:
